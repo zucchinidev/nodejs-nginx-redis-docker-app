@@ -7,6 +7,9 @@ the ability to scale the node application depending on the load.
 Exists 3 instances of the node server running the application and Nginx server
 in front of node for load balancing the node instances.
 
+
+![Scheme](Docker.png)
+
 ## Start
 ```
 sudo docker-compose up
