@@ -12,18 +12,27 @@ node1:
         - redis
     ports:
         - "8080"
+    volumes:
+        - ./Docker-node/:/home/app
+        - /home/app/node_modules
 node2:
     build: ./Docker-node
     links:
         - redis
     ports:
         - "8080"
+    volumes:
+        - ./Docker-node/:/home/app
+        - /home/app/node_modules
 node3:
     build: ./Docker-node
     links:
         - redis
     ports:
         - "8080"
+    volumes:
+        - ./Docker-node/:/home/app
+        - /home/app/node_modules
 redis:
     image: redis
     ports:

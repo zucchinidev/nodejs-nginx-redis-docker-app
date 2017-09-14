@@ -4,7 +4,7 @@ MAINTAINER Andrea Zucchini
 # Replace shell with bash so we can source files
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 # Set environment variables
-ENV appDir /var/www/app/current
+ENV HOME=/home/app
 
 RUN apt-get update
 
@@ -37,17 +37,17 @@ ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # Set the work directory
-RUN mkdir -p /var/www/app/current
-WORKDIR ${appDir}
+WORKDIR $HOME
 
 RUN npm install -g nodemon
+ADD . ./
 
-# Add our package.json and install *before* adding our application files
-ADD package.json ./
+RUN useradd --user-group --create-home --shell /bin/false app
+RUN chown -R app:app $HOME/*
+
 RUN npm i
 
-# Add application files
-ADD . /var/www/app/current
+USER app
 
 #Expose the port
 EXPOSE 3030
